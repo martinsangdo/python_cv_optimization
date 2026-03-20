@@ -207,4 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 *.pdf
-*.docx
+*.docx  
+.DS_Store
+notes.txt
+templates
