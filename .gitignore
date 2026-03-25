@@ -210,5 +210,6 @@ __marimo__/
 *.docx  
 .DS_Store
 notes.txt
-templates
+cv_templates
 outputs
+.env
