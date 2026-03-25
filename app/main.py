@@ -27,3 +27,8 @@ templates = Jinja2Templates(directory="app/templates")
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
     return templates.TemplateResponse(request, "index.html", {"request": request})
+
+#cv first step
+@app.get("/cv/first_step", response_class=HTMLResponse)
+async def cv_first_step(request: Request):
+    return templates.TemplateResponse(request, "cv/first_step.html", {"request": request})

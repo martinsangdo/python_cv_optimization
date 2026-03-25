@@ -213,3 +213,5 @@ notes.txt
 cv_templates
 outputs
 .env
+venv
+.venv
