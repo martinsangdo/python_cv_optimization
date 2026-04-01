@@ -11,6 +11,12 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="{{ url_for('static', path='css/cv_style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // PDF.js worker setup (required for it to parse PDF file)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
 </head>
 
 <body>
@@ -124,7 +130,42 @@
           <label class="field-label">(Minimum 200 characters)</label>
           <textarea class="text-input" id="job-desc" rows="10"
             placeholder="Paste the full job posting here — responsibilities, requirements, qualifications, and anything else in the listing…"
-            oninput="updateCharCount()"></textarea>
+            oninput="updateCharCount()">
+
+          Full job description
+Job description
+Ahamove is looking for a Junior Backend Software Engineer to join our engineering team and help build scalable systems that process hundreds of thousands of orders every day. You will work in a fast-moving environment with challenging problems in performance, reliability, distributed systems, and real-time data processing.
+This role is ideal for those who are eager to learn, grow quickly, and work with large-scale backend architectures and cloud infrastructure.
+Key Responsibilities
+Develop, maintain, and optimize backend services (microservices).
+Build and integrate APIs for customers, drivers, partners, and internal systems.
+Participate in designing system architecture, data models, and processing flows.
+Write clean, maintainable, well-structured code following clean architecture principles.
+Troubleshoot issues, fix bugs, and improve service performance.
+Collaborate closely with Product Managers, QA, Data teams, and other engineers.
+Participate in code reviews and continuously improve team coding standards.
+Job requirement
+1-2 years of experience as a Backend Engineer.
+Bachelor's degree in Computer Science, Software Engineering, or related fields.
+Proficiency in Python or Golang (at least one required).
+Solid understanding of backend fundamentals: REST APIs, databases, HTTP, data structures, algorithms.
+Basic SQL knowledge and experience with MongoDB or PostgreSQL
+Strong problem-solving skills, growth mindset, and high ownership.
+Nice-to-have
+Experience with Node.js or JavaScript.
+Understanding of microservices architecture.
+Experience working with Kubernetes (K8s) or similar container orchestration systems.
+Experience with AWS or other cloud platforms.
+Familiarity with Docker, CI/CD, or message queues (Kafka, RabbitMQ).
+Exposure to clean architecture or domain-driven design (DDD).
+Benefit
+Physical Wellbeing Benefit: General Insurance, Medical check-up, Accident Insurance, Healthcare Insurance
+Emotional Wellbeing Benefit: Company Trip, Year End Party, Aha Hour Activities, Special Day Gifts, Aha Club (Badminton, Soccer)
+Financial Wellbeing Benefit: Grab/Be For Work, Workplace Relocation, 13th Month Salary, PP Appreciate, Annual Leave Remain, ESOP
+          
+          
+          
+          </textarea>
           <div class="char-count"><span id="char-count">0</span> characters — aim for the full posting for best results
           </div>
         </div>
@@ -220,6 +261,7 @@
     </div><!-- .card -->
   </div><!-- .main-wrap -->
   <script src="{{ url_for('static', path='/js/cv/cv_main.js') }}"></script>
+
 </body>
 
 </html>

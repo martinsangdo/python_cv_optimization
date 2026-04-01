@@ -3,6 +3,36 @@ let cvFile = null;
 let cvText = '';
 let currentStep = 1;
 
+// --- EXTRACT DOCX TEXT ---
+function readDocx(file) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const arrayBuffer = event.target.result;
+        mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+            .then(function (result) {
+                cvText = result.value;
+            })
+            .catch(err => console.error(err));
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+// --- EXTRACT PDF TEXT ---
+async function readPDF(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = "";
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        // Join individual text items into a string
+        const pageText = textContent.items.map(item => item.str).join(" ");
+        fullText += `--- Page ${i} ---\n${pageText}\n\n`;
+    }
+    cvText = fullText;
+}
+
 /* ─── STEP NAVIGATION ─── */
 function goToStep(step) {
     currentStep = step;
@@ -47,10 +77,11 @@ function handleFile(file) {
     document.getElementById('file-selected').classList.add('show');
     document.getElementById('btn-step1').disabled = false;
 
-    // Read file as text for sending to API
-    const reader = new FileReader();
-    reader.onload = e => { cvText = e.target.result || ''; };
-    reader.readAsText(file);
+    if (file.type === "application/pdf") {
+        readPDF(file);
+    } else if (file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        readDocx(file);
+    }
 }
 
 document.getElementById('file-remove').addEventListener('click', () => {
@@ -69,6 +100,7 @@ function updateCharCount() {
 
 /* ─── ANALYSIS ─── */
 async function startAnalysis() {
+    console.log(cvText);
     goToStep(3);
     const jobDesc = document.getElementById('job-desc').value;
     animateLoadingSteps();
@@ -84,9 +116,6 @@ JOB DESCRIPTION:
 """
 ${jobDesc.substring(0, 3000)}
 """
-
-${jobTitle ? 'Job Title: ' + jobTitle : ''}
-${jobCompany ? 'Company: ' + jobCompany : ''}
 
 Analyze and respond with ONLY a valid JSON object (no markdown, no code fences) in this exact structure:
 {
